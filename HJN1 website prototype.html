@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Visit Taniti – Prototype</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      line-height: 1.5;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #0277bd;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    header .brand {
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #e1f5fe;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: rgba(255, 255, 255, 0.18);
+      outline: none;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 4rem;
+    }
+
+    section {
+      background: #fff;
+      margin-bottom: 2rem;
+      padding: 1.75rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+    }
+
+    #home-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    #home-hero .hero-image {
+      min-height: 180px;
+      background: linear-gradient(135deg, #81d4fa, #4fc3f7);
+      border-radius: 10px;
+    }
+
+    .hero-kicker {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #0277bd;
+      font-weight: 700;
+    }
+
+    .hero-buttons {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #0277bd;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #e1f5fe;
+      color: #01579b;
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      opacity: 0.92;
+    }
+
+    .section-intro {
+      font-size: 0.95rem;
+      max-width: 650px;
+      margin-bottom: 1.25rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      background: #fafafa;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .tags {
+      margin-top: 0.25rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: #e1f5fe;
+      color: #01579b;
+      font-size: 0.75rem;
+      margin-right: 0.25rem;
+      margin-bottom: 0.15rem;
+      border: 1px solid #b3e5fc;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .pill {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid #ccc;
+      font-size: 0.8rem;
+      background: #f9f9f9;
+    }
+
+    .pill--active {
+      background: #0277bd;
+      color: #fff;
+      border-color: #0277bd;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 1.75rem;
+    }
+
+    form label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.45rem 0.55rem;
+      border-radius: 6px;
+      border: 1px solid #cfd8dc;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    details {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      background: #fafafa;
+      margin-bottom: 0.5rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    footer {
+      background: #eceff1;
+      padding: 1.2rem 1rem 1.5rem;
+      border-top: 1px solid #cfd8dc;
+    }
+
+    footer .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    footer nav ul {
+      gap: 0.5rem;
+    }
+
+    footer nav a {
+      color: #37474f;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      #home-hero,
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Primary Navigation -->
+  <header>
+    <nav>
+      <div class="brand">Visit Taniti</div>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#stay">Stay</a></li>
+        <li><a href="#eat">Eat</a></li>
+        <li><a href="#explore">Explore</a></li>
+        <li><a href="#plan">Plan Your Trip</a></li>
+        <li><a href="#contact">Contact / FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" aria-labelledby="home-heading">
+      <div id="home-hero">
+        <div>
+          <p class="hero-kicker">Welcome to Taniti</p>
+          <h1 id="home-heading">Discover Your Next Island Escape</h1>
+          <p>
+            Plan beaches, rainforest hikes, volcano tours, family-friendly
+            adventures, and nightlife all in one place.
+          </p>
+          <div class="hero-buttons">
+            <a class="btn btn-primary" href="#stay">Find a Place to Stay</a>
+            <a class="btn btn-secondary" href="#explore">Browse Activities</a>
+          </div>
+        </div>
+        <div class="hero-image" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- STAY / LODGING -->
+    <section id="stay" aria-labelledby="stay-heading">
+      <h2 id="stay-heading">Stay in Taniti</h2>
+      <p class="section-intro">
+        Choose from hostels, family-owned guesthouses, kid-friendly hotels, or
+        a four-star resort. All lodging is inspected and regulated for safety
+        and comfort.
+      </p>
+
+      <div class="pill-row">
+        <span class="pill pill--active">All</span>
+        <span class="pill">Budget</span>
+        <span class="pill">Kid-Friendly</span>
+        <span class="pill">Resort</span>
+        <span class="pill">Bed &amp; Breakfast</span>
+      </div>
+
+      <div class="grid grid-3 lodging-grid">
+        <article class="card">
+          <h3>Coral Reef Family Hotel</h3>
+          <p>
+            Mid-range hotel steps away from a shallow, calm beach. Family rooms,
+            cribs, and a kids’ splash pool.
+          </p>
+          <div class="tags">
+            <span class="tag">Kid-Friendly</span>
+            <span class="tag">Family Rooms</span>
+            <span class="tag">Near Beach</span>
+          </div>
+          <a href="#contact" class="btn btn-primary">Request Booking</a>
+        </article>
+
+        <article class="card">
+          <h3>Rainforest Guesthouse</h3>
+          <p>
+            Small family-owned guesthouse near hiking trails. Quiet and cozy,
+            ideal for couples or solo travelers.
+          </p>
+          <div class="tags">
+            <span class="tag">Local Host</span>
+            <span class="tag">Budget-Friendly</span>
+          </div>
+          <a href="#contact" class="btn btn-secondary">Check Availability</a>
+        </article>
+
+        <article class="card">
+          <h3>Bayview Resort &amp; Spa</h3>
+          <p>
+            Four-star resort with beach access, kids’ club, and adults-only spa
+            wing for single travelers or groups.
+          </p>
+          <div class="tags">
+            <span class="tag">Kid-Friendly</span>
+            <span class="tag">Adults-Only Spa</span>
+            <span class="tag">Pool &amp; Bar</span>
+          </div>
+          <a href="#contact" class="btn btn-primary">Book Resort Stay</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- EAT / RESTAURANTS -->
+    <section id="eat" aria-labelledby="eat-heading">
+      <h2 id="eat-heading">Eat &amp; Drink</h2>
+      <p class="section-intro">
+        Taniti offers a mix of local fish and rice dishes, American-style meals,
+        and Pan-Asian cuisine, plus kid-friendly menus and vegetarian options.
+      </p>
+
+      <h3>Cuisines Available</h3>
+      <div class="pill-row">
+        <span class="pill pill--active">Local Fish &amp; Rice</span>
+        <span class="pill">American</span>
+        <span class="pill">Pan-Asian</span>
+        <span class="pill">Vegetarian</span>
+        <span class="pill">Vegan</span>
+        <span class="pill">Kid-Friendly Menu</span>
+      </div>
+
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Yellow Leaf Grill</h3>
+          <p>
+            Serves fresh-caught fish, rice, tropical fruit, and simple kids’
+            plates. Perfect for families.
+          </p>
+          <div class="tags">
+            <span class="tag">Local Cuisine</span>
+            <span class="tag">Kid-Friendly</span>
+          </div>
+          <a href="#contact" class="btn btn-secondary">View Sample Menu</a>
+        </article>
+
+        <article class="card">
+          <h3>Harbor Diner</h3>
+          <p>
+            American-style burgers, sandwiches, and breakfast all day, plus
+            milkshakes and vegetarian options.
+          </p>
+          <div class="tags">
+            <span class="tag">American</span>
+            <span class="tag">Vegetarian Options</span>
+          </div>
+          <a href="#contact" class="btn btn-secondary">View Sample Menu</a>
+        </article>
+
+        <article class="card">
+          <h3>Lotus Bay Kitchen</h3>
+          <p>
+            Pan-Asian dishes, noodle bowls, and shared plates. Great option for
+            adults looking for a relaxed dinner.
+          </p>
+          <div class="tags">
+            <span class="tag">Pan-Asian</span>
+            <span class="tag">Vegan Options</span>
+          </div>
+          <a href="#contact" class="btn btn-secondary">Reserve Table</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPLORE / ACTIVITIES -->
+    <section id="explore" aria-labelledby="explore-heading">
+      <h2 id="explore-heading">Explore Taniti</h2>
+      <p class="section-intro">
+        From calm beach days with kids to nightlife in Merriton Landing, choose
+        experiences that match your group.
+      </p>
+
+      <div class="two-column">
+        <!-- Family Activities -->
+        <div>
+          <h3>Family-Friendly Activities</h3>
+          <div class="grid">
+            <article class="card">
+              <h3>Lagoon Beach Day</h3>
+              <p>
+                Spend a day on a shallow, protected beach with lifeguards and
+                plenty of shade. Ideal for younger children.
+              </p>
+              <div class="tags">
+                <span class="tag">Kids</span>
+                <span class="tag">Calm Water</span>
+              </div>
+              <a href="#contact" class="btn btn-primary">Family Beach Pass</a>
+            </article>
+
+            <article class="card">
+              <h3>Rainforest Discovery Walk</h3>
+              <p>
+                Easy guided walk through the rainforest with shorter routes for
+                kids and storytelling about local wildlife.
+              </p>
+              <div class="tags">
+                <span class="tag">Kids</span>
+                <span class="tag">Guided Tour</span>
+              </div>
+              <a href="#contact" class="btn btn-secondary">Request Tour Time</a>
+            </article>
+
+            <article class="card">
+              <h3>Volcano Visitor Center</h3>
+              <p>
+                Learn about Taniti’s active volcano with hands-on exhibits and
+                safe viewing areas.
+              </p>
+              <div class="tags">
+                <span class="tag">Educational</span>
+                <span class="tag">All Ages</span>
+              </div>
+              <a href="#contact" class="btn btn-secondary">Plan a Visit</a>
+            </article>
+
+            <article class="card">
+              <h3>Arcade &amp; Mini Bowling</h3>
+              <p>
+                Indoor arcade, kid-sized bowling lanes, and family game passes
+                for rainy days or evenings.
+              </p>
+              <div class="tags">
+                <span class="tag">Kids</span>
+                <span class="tag">Indoor</span>
+              </div>
+              <a href="#contact" class="btn btn-secondary">Get Game Passes</a>
+            </article>
+          </div>
+        </div>
+
+        <!-- Adult Entertainment -->
+        <div>
+          <h3>Single Adult Entertainment &amp; Nightlife</h3>
+          <div class="grid">
+            <article class="card">
+              <h3>Merriton Landing Pub Crawl</h3>
+              <p>
+                Visit several local pubs and a microbrewery with live music and
+                small plates.
+              </p>
+              <div class="tags">
+                <span class="tag">Nightlife</span>
+                <span class="tag">Microbrewery</span>
+              </div>
+              <a href="#contact" class="btn btn-primary">Join Pub Tour</a>
+            </article>
+
+            <article class="card">
+              <h3>Harbor Dance Club</h3>
+              <p>
+                Late-night dance club with DJs, themed nights, and a dress code
+                suitable for solo travelers and groups.
+              </p>
+              <div class="tags">
+                <span class="tag">Late Night</span>
+                <span class="tag">DJ &amp; Dancing</span>
+              </div>
+              <a href="#contact" class="btn btn-secondary">See Event Schedule</a>
+            </article>
+
+            <article class="card">
+              <h3>Art &amp; Wine Evening</h3>
+              <p>
+                Guided art gallery walk followed by a wine tasting at a
+                waterfront bar.
+              </p>
+              <div class="tags">
+                <span class="tag">Art Galleries</span>
+                <span class="tag">Wine</span>
+              </div>
+              <a href="#contact" class="btn btn-secondary">Reserve Spot</a>
+            </article>
+
+            <article class="card">
+              <h3>Late Movie &amp; Bowling</h3>
+              <p>
+                Catch a late screening at the local cinema and finish the night
+                with full-size bowling lanes.
+              </p>
+              <div class="tags">
+                <span class="tag">Movies</span>
+                <span class="tag">Bowling</span>
+              </div>
+              <a href="#contact" class="btn btn-secondary">Book Combo Ticket</a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLAN YOUR TRIP -->
+    <section id="plan" aria-labelledby="plan-heading">
+      <h2 id="plan-heading">Plan Your Trip</h2>
+      <p class="section-intro">
+        Get to Taniti by air or cruise ship, then choose buses, taxis, or
+        bicycles to explore once you arrive.
+      </p>
+
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Getting to Taniti</h3>
+          <p>
+            Most visitors arrive by air into Taniti’s airport. A small cruise
+            ship docks once per week in Yellow Leaf Bay.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Ground Transportation</h3>
+          <p>
+            Public buses run in Taniti City from 5 a.m. to 11 p.m. Taxis,
+            rental cars, and bike rentals with helmets are available.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Safety &amp; Medical Care</h3>
+          <p>
+            Violent crime is rare, but petty theft can occur in busy areas.
+            There is one hospital and several clinics on the island.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Money &amp; Power</h3>
+          <p>
+            Taniti uses the U.S. dollar and many businesses accept euros and
+            yen. Power outlets are 120 volts.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Holidays &amp; Closures</h3>
+          <p>
+            Taniti has many national holidays; some restaurants and attractions
+            may be closed. Check dates before booking activities.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Language Tips</h3>
+          <p>
+            Many younger residents speak English in Taniti City, but English is
+            less common in rural areas.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT + FAQ -->
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact &amp; FAQ</h2>
+      <div class="two-column">
+        <!-- Contact Form -->
+        <div>
+          <h3>Send Us a Question</h3>
+          <p class="section-intro">
+            Tell us about your group and what type of trip you’re planning. We
+            can recommend lodging, kid activities, or nightlife options.
+          </p>
+          <form>
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="Your name" />
+
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="you@example.com" />
+
+            <label for="travel-type">Travel Type</label>
+            <input
+              id="travel-type"
+              type="text"
+              placeholder="Family with kids, solo adult, friends trip…"
+            />
+
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              placeholder="Ask about lodging, activities, or transportation."
+            ></textarea>
+
+            <button type="submit" class="btn btn-primary" style="margin-top:0.75rem;">
+              Submit Inquiry
+            </button>
+          </form>
+        </div>
+
+        <!-- FAQ -->
+        <div>
+          <h3>Frequently Asked Questions</h3>
+
+          <details>
+            <summary>Is Taniti kid-friendly?</summary>
+            <p>
+              Yes. Many beaches are calm and shallow, and several hotels and
+              resorts offer kid-friendly amenities, kids’ clubs, and family
+              rooms.
+            </p>
+          </details>
+
+          <details>
+            <summary>What is there to do for single adults?</summary>
+            <p>
+              Merriton Landing has pubs, a microbrewery, a dance club, late
+              movies, bowling, and art galleries—great for solo travelers and
+              groups of adults.
+            </p>
+          </details>
+
+          <details>
+            <summary>Do I need a car?</summary>
+            <p>
+              Not necessarily. Taniti City is walkable with public buses, taxis,
+              and bike rentals. A car can be useful if you want to explore the
+              rest of the island.
+            </p>
+          </details>
+
+          <details>
+            <summary>What about payment methods?</summary>
+            <p>
+              The U.S. dollar is the main currency, but some businesses accept
+              euros and yen. Most major credit cards are accepted.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Secondary Navigation / Footer -->
+  <footer>
+    <div class="footer-inner">
+      <strong>Quick Navigation</strong>
+      <nav aria-label="Footer navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#stay">Stay</a></li>
+          <li><a href="#eat">Eat</a></li>
+          <li><a href="#explore">Explore</a></li>
+          <li><a href="#plan">Plan Your Trip</a></li>
+          <li><a href="#contact">Contact / FAQ</a></li>
+        </ul>
+      </nav>
+      <span>&copy; Taniti Tourism Board – Prototype Only</span>
+    </div>
+  </footer>
+</body>
+</html>
